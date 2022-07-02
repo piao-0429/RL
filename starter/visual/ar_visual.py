@@ -65,9 +65,9 @@ model_dir="log/"+experiment_id+"/"+params['env_name']+"/"+str(args.seed)+"/model
 # pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_finish.pth", map_location='cpu'))
 # pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_finish.pth", map_location='cpu'))
 
-pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best7815.pth", map_location='cpu'))
-pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_best7815.pth", map_location='cpu'))
-pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best7815.pth", map_location='cpu'))
+pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best.pth", map_location='cpu'))
+pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_best.pth", map_location='cpu'))
+pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best.pth", map_location='cpu'))
 
 ############################# save images for gif ##############################
 
