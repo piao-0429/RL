@@ -47,3 +47,4 @@ python embedding_space_generate.py --config meta_config/mujoco/visual/arsac_visu
 
 python plotting_embedding_space.py --config meta_config/mujoco/visual/arsac_visual_embedding_space.json --id MUJOCO_ARMT_10_BASE --seed 1
       
+python starter/visual/ar_visual.py --config meta_config/mujoco/visual/arsac_visual.json --id MUJOCO_ARMT_ANT_DIR_12_v2 --seed 1
