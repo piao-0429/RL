@@ -20,9 +20,7 @@ params = get_params(args.config)
 
 import torchrl.policies as policies
 import torchrl.networks as networks
-
-from torchrl.algo import ARSAC_v2
-
+from torchrl.algo import ARSAC_v3
 from torchrl.collector.para.async_mt import AsyncMultiTaskParallelCollectorForActionRepresentation
 from torchrl.replay_buffers.shared import AsyncSharedReplayBuffer
 import gym
@@ -36,7 +34,6 @@ def experiment(args):
     env=gym.make(params['env_name'])
    
     # # task_list for Ant-Vel
-    # # task_list=["forward_1", "forward_2", "forward_3", "forward_4", "forward_5", "forward_6", "forward_7", "forward_8", "forward_9", "forward_10"]
     # task_list=["forward_1", "forward_2", "forward_3", "forward_4", "forward_5", "backward_1", "backward_2", "backward_3", "backward_4", "backward_5"]
     
     # task_list for Ant-Dir
@@ -67,7 +64,7 @@ def experiment(args):
     params['general_setting']['device'] = device
 
     params['p_state_net']['base_type']=networks.MLPBase
-    params['p_task_net']['base_type']=networks.MLPBase
+    params['task_net']['base_type']=networks.MLPBase
     params['p_action_net']['base_type']=networks.MLPBase
     params['q_net']['base_type']=networks.MLPBase
 
@@ -92,6 +89,21 @@ def experiment(args):
         output_shape = 2 * env.action_space.shape[0],
         **params['p_action_net'] 
     )
+    
+    qf1_task=networks.NormNet(
+        input_shape=task_num, 
+        output_shape=embedding_shape,
+        **params['task_net'],
+        norm = 5
+    )
+    
+    qf2_task=networks.NormNet(
+        input_shape=task_num, 
+        output_shape=embedding_shape,
+        **params['task_net'],
+        norm = 5
+    )
+    
     
     qf1 = networks.FlattenNet( 
         input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding_shape,
@@ -140,10 +152,12 @@ def experiment(args):
     params['general_setting']['batch_size'] = int(params['general_setting']['batch_size'])
     params['general_setting']['save_dir'] = osp.join(logger.work_dir,"model")
 
-    agent = ARSAC_v2(
+    agent = ARSAC_v3(
         pf_state = pf_state,
         pf_task = pf_task,
         pf_action = pf_action,
+        qf1_task=qf1_task,
+        qf2_task=qf2_task,
         qf1 = qf1,
         qf2 = qf2,
         task_nums = task_num,

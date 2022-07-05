@@ -80,7 +80,7 @@ def experiment(args):
     pf_task=networks.NormNet(
         input_shape=task_num, 
         output_shape=embedding_shape,
-        **params['p_task_net'],
+        **params['task_net'],
         norm = 5
     )
 

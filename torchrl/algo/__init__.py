@@ -11,5 +11,6 @@ __all__ = [
     'ARSAC',
     'ARSAC_Embed',
     'ARSAC_Embed_Net',
-    'ARSAC_v2'
+    'ARSAC_v2',
+    'ARSAC_v3'
 ]

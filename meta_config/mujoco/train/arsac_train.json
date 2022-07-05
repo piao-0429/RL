@@ -16,7 +16,7 @@
         "append_hidden_shapes": []
     },
 
-    "p_task_net":{
+    "task_net":{
         "hidden_shapes": [400],
         "append_hidden_shapes": []
     },

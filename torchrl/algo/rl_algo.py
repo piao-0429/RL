@@ -135,7 +135,8 @@ class RLAlgo():
                 # np.mean(eval_infos["eval_rewards"]) > self.best_eval:
                 # self.best_eval = np.mean(eval_infos["eval_rewards"])
                 
-                self.snapshot(self.save_dir, 'best'+str(epoch))
+                self.snapshot(self.save_dir, 'best')
+                print("Save the best model path at epoch", epoch, "!")
             del eval_infos["eval_rewards"]
 
             infos["Running_Average_Rewards"] = np.mean(self.episode_rewards)
