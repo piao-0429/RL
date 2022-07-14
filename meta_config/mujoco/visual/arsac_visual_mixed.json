@@ -1,5 +1,5 @@
 {
-    "env_name" : "HalfCheetah-v3",
+    "env_name" : "Ant-v3",
 
     "representation_shape":16,
 
@@ -12,7 +12,7 @@
         "append_hidden_shapes": []
     },
 
-    "p_task_net":{
+    "task_net":{
         "hidden_shapes": [400],
         "append_hidden_shapes": []
     },
@@ -24,5 +24,5 @@
 
     "save_embedding": true,
 
-    "save_velocity": true
+    "save_velocity": false
 }

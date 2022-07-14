@@ -30,12 +30,12 @@ from mujoco_py import GlfwContext
 args = get_args()
 params = get_params(args.config)
 env=gym.make(params['env_name'])
-task_list=["forward_1.5_mixed","forward_2.5_mixed","forward_3.5_mixed","forward_4.5_mixed","forward_5.5_mixed","forward_6.5_mixed","forward_7.5_mixed","forward_8.5_mixed","forward_9.5_mixed",]
+task_list=["dir_15_mixed","dir_45_mixed","dir_75_mixed","dir_105_mixed","dir_135_mixed","dir_165_mixed","dir_195_mixed","dir_225_mixed","dir_255_mixed", "dir_285_mixed","dir_315_mixed","dir_345_mixed"]
 task_num=len(task_list)
 representation_shape= params['representation_shape']
 embedding_shape=params['embedding_shape']
 params['p_state_net']['base_type']=networks.MLPBase
-params['p_task_net']['base_type']=networks.MLPBase
+params['task_net']['base_type']=networks.MLPBase
 params['p_action_net']['base_type']=networks.MLPBase
 import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
@@ -44,6 +44,14 @@ pf_state = networks.Net(
 	output_shape=representation_shape,
 	**params['p_state_net']
 )
+
+qf_task=networks.NormNet(
+        input_shape=task_num, 
+        output_shape=embedding_shape,
+        **params['task_net'],
+        norm = 5
+    )
+
 
 pf_action=policies.ActionRepresentationGuassianContPolicy(
 	input_shape = representation_shape + embedding_shape,
@@ -56,7 +64,7 @@ model_dir="log/"+experiment_id+"/"+params['env_name']+"/"+str(args.seed)+"/model
 
 pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_finish.pth", map_location='cpu'))
 pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_finish.pth", map_location='cpu'))
-
+qf_task.load_state_dict(torch.load(model_dir + "model_qf_task_finish.pth", map_location='cpu'))
 
 ############################# save images for gif ##############################
 
@@ -150,32 +158,38 @@ def save_gif_images(env_name, max_ep_len):
 		average_v_writer.writerow(["task","v_mean","v_std"])
 
 	pre_embeddings=[]
-	pre_embedding=torch.Tensor([-2.7487948,0.42855635,4.1545715]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.936531,0.71696174,0.3415116]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.3051043,-2.0263352,1.5362432]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.9628754,0.054794494,0.60569173]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.626919,1.2133138,1.455846]).unsqueeze(0)
+	pre_embedding=torch.Tensor([2.2239823,0.7987723,-4.406344]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([2.7596745,3.6690512,1.98047]).unsqueeze(0)
+	pre_embedding=torch.Tensor([2.993053,1.4355642,-3.7390897]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([1.7488582,4.540233,1.152293]).unsqueeze(0)
+	pre_embedding=torch.Tensor([3.5592418,-2.3015976,-2.6522532]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([0.785551,4.9105945,0.51862735]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.315548,-1.7585125,-1.8120922]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([0.68335223,4.947104,-0.24329783]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.736697,-1.3598969,-0.84520847]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([1.095417,4.764095,-1.0504589]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.574261,-1.8774043,-0.742622]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([1.7505156,4.257007,-1.9528402]).unsqueeze(0)
+	pre_embedding=torch.Tensor([1.0700808,-3.7418633,-3.1390104]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([1.750756,3.6864915,-2.888708]).unsqueeze(0)
+	pre_embedding=torch.Tensor([4.5968156,1.3600149,-1.4211421]).unsqueeze(0)
+	pre_embeddings.append(pre_embedding)
+	pre_embedding=torch.Tensor([-0.030164212,-1.3482533,-4.814697]).unsqueeze(0)
+	pre_embeddings.append(pre_embedding)
+	pre_embedding=torch.Tensor([-0.17253584,0.4935394,-4.97259]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
 	embeddings=[]
-	for i in range(9):
+	for i in range(11):
 		embedding = (pre_embeddings[i]+pre_embeddings[i+1])/2
 		embedding = 5 * F.normalize(embedding)
 		embeddings.append(embedding)
-	
+	embedding = (pre_embeddings[11]+pre_embeddings[0])/2
+	embedding = 5 * F.normalize(embedding)
+	embeddings.append(embedding)
 
 	for i in range(task_num):
 		if params["save_embedding"]:
@@ -205,6 +219,17 @@ def save_gif_images(env_name, max_ep_len):
 				ob=next_ob
 				if done:
 					break
+			x = info['x_position']
+			y = info['y_position']
+			dir = np.arctan(y/x)/ np.pi * 180
+			if x<0 and y>0:
+				dir+=180
+			elif x<0 and y<0:
+				dir+=180
+			elif x>0 and y<0:
+				dir+=360
+			
+			print("task", i, "direction:", dir)
 
 		if params["save_embedding"]:
 			embedding = embedding.squeeze(0)
@@ -241,9 +266,9 @@ def save_gif(env_name):
 	experiment_id=str(args.id)
 
 	# adjust following parameters to get desired duration, size (bytes) and smoothness of gif
-	total_timesteps = 30000
-	step = 3
-	frame_duration = 200
+	total_timesteps = 250
+	step = 1
+	frame_duration = 60
 
 	# input images
 	gif_images_dir = "gif_images/" + experiment_id_v2 + '/' + env_name +"/"
@@ -278,7 +303,7 @@ def save_gif(env_name):
 
 if __name__ == '__main__':
 	env_name = params["env_name"]
-	max_ep_len = 20000           
+	max_ep_len = 1000          
 	save_gif_images(env_name,  max_ep_len)
 	# save_gif(env_name)
 
