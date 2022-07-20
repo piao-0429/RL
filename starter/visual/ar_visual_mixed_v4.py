@@ -34,6 +34,7 @@ task_list=["dir_15_mixed","dir_45_mixed","dir_75_mixed","dir_105_mixed","dir_135
 task_num=len(task_list)
 representation_shape= params['representation_shape']
 embedding_shape=params['embedding_shape']
+embedding4q_shape=params['embedding4q_shape']
 params['p_state_net']['base_type']=networks.MLPBase
 params['task_net']['base_type']=networks.MLPBase
 params['p_action_net']['base_type']=networks.MLPBase
@@ -57,11 +58,11 @@ model_dir="log/"+experiment_id+"/"+params['env_name']+"/"+str(args.seed)+"/model
 # pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_finish.pth", map_location='cpu'))
 # pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_finish.pth", map_location='cpu'))
 
-pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_8060.pth", map_location='cpu'))
-pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_8060.pth", map_location='cpu'))
+# pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_8060.pth", map_location='cpu'))
+# pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_8060.pth", map_location='cpu'))
 
-# pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best.pth", map_location='cpu'))
-# pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best.pth", map_location='cpu'))
+pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best.pth", map_location='cpu'))
+pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best.pth", map_location='cpu'))
 
 ############################# save images for gif ##############################
 
@@ -168,71 +169,67 @@ def save_gif_images(env_name, max_ep_len):
 		average_v_writer.writerow(["task","v_mean","v_std"])
 
 	pre_embeddings=[]
-	pre_embedding=torch.Tensor([4.936531,0.71696174,0.3415116]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.6606739,1.7947379,-2.1531084]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.9628754,0.054794494,0.60569173]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.3860723,3.432964,-2.511398]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([2.2239823,0.7987723,-4.406344]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.9584774,3.3695683,-8.59104]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([2.1639457,-0.08721691,-4.506632]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.13486814,1.0251635,-7.7520156]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([3.5592418,-2.3015976,-2.6522532]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.20245384,-0.7164493,-6.3597846]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.315548,-1.7585125,-1.8120922]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.89929026,-0.8733811,-5.003262]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.736697,-1.3598969,-0.84520847]).unsqueeze(0)
+	pre_embedding=torch.Tensor([3.470018,1.556553,-4.468398]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.574261,-1.8774043,-0.742622]).unsqueeze(0)
+	pre_embedding=torch.Tensor([3.0787737,0.5640125,-4.1925883]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([1.0700808,-3.7418633,-3.1390104]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.0032064,-2.3969576,-5.4104686]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([4.5968156,1.3600149,-1.4211421]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.31234053,-0.18327236,0.16193914]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-0.030164212,-1.3482533,-4.814697]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.2142231,-0.1216026,-1.095226]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-0.17253584,0.4935394,-4.97259]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.7513522,0.4915735,-1.8542793]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
 	embeddings=[]
 	for i in range(11):
 		embedding = (pre_embeddings[i]+pre_embeddings[i+1])/2
-		embedding = 5 * F.normalize(embedding)
 		embeddings.append(embedding)
 	embedding = (pre_embeddings[11]+pre_embeddings[0])/2
-	embedding = 5 * F.normalize(embedding)
 	embeddings.append(embedding)
  
 	pre_embeddings4q=[]
-	pre_embedding4q=torch.Tensor([2.8113074,-0.5523925,-4.0977325]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0024124333,0.0007107592,-0.0076082433,0.0034545814,0.0038565355,-0.0071173944,-0.0016199141,0.004400964,0.0018969257,-0.005828591,0.00055183773,-0.0016757401]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([2.052821,-1.4819754,-4.311574]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0015623689,-0.0007958163,-0.007604964,0.0061809076,0.003562076,-0.0049662525,-0.0021639576,0.0049959137,0.0020056544,-0.007465657,0.0003324512,-0.0014514563]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([1.0253621,-0.1841923,-4.8902664]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.00077094877,0.0005144094,-0.009687866,0.0051149516,0.004010362,-0.0037882351,0.00046436046,0.00354262,-0.0015447251,-0.0062691765,0.00037945877,-0.0038112402]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([2.1639457,-0.08721691,-4.506632]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0024197754,0.0008162736,-0.0078103244,0.005074379,0.0033856076,-0.00551164,0.0009554983,0.003809845,0.00075760786,-0.0065974025,0.002136918,-0.0027757282]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([0.21361054,-0.92456406,-4.909129]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0021639476,0.0017928535,-0.0077921757,0.006481872,0.002438161,-0.0051513435,-0.0014609301,0.0040502306,0.0016231956,-0.0076003326,0.0015197434,-0.002371945]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([1.2884551,-0.56611884,-4.797853]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.001569144,-0.00023291772,-0.0073467325,0.0056789955,0.0021916232,-0.004600441,0.00010959874,0.0038533537,0.00074748043,-0.005646593,0.001005145,-0.001181378]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([2.0226905,-0.83962744,-4.4948583]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.002209358,-0.000275427,-0.008185705,0.0044727316,0.0024819425,-0.0067694588,0.0004989442,0.0035088146,-5.8100093e-05,-0.0064638024,0.001214704,-0.003155149]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([1.0968341,-1.1697899,-4.735879]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0017795785,0.0016829093,-0.007126414,0.0048793266,0.004972908,-0.0053185434,-4.019006e-05,0.004891864,0.00017136289,-0.006844638,0.0009034239,-0.0013043723]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([0.0088049695,-1.1049261,-4.876378]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0031121238,-0.00014476175,-0.0067942655,0.00527372,0.004677874,-0.005621027,-0.0019711899,0.003736692,-0.0009469007,-0.0066319117,0.0012307703,-0.00399597]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([2.2200308,-0.4476421,-4.457699]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.001950722,0.0007393999,-0.009704115,0.006785209,0.0027901945,-0.0067291353,-0.001328749,0.0028258194,0.0018280726,-0.0059109693,0.0013215987,-0.0019313393]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([-0.4588258,-0.94878304,-4.887667]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([0.0003365836,0.00040529727,-0.008483228,0.0051165894,0.0011356312,-0.0056261793,-0.0003934605,0.0036848066,-6.738282e-05,-0.006597656,0.0004311402,3.1390933e-05]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
-	pre_embedding4q=torch.Tensor([0.93127483,0.752826,-4.8544803]).unsqueeze(0)
+	pre_embedding4q=torch.Tensor([-0.00049414346,0.00028446922,-0.008214628,0.0057649575,0.0049274317,-0.0043454077,-0.00042496156,0.0034471892,0.0006012074,-0.0045809145,0.0025877326,-0.0016192016]).unsqueeze(0)
 	pre_embeddings4q.append(pre_embedding4q)
 	embeddings4q=[]
 	for i in range(11):
 		embedding4q = (pre_embeddings4q[i]+pre_embeddings4q[i+1])/2
-		embedding4q = 5 * F.normalize(embedding4q)
 		embeddings4q.append(embedding4q)
 	embedding4q = (pre_embeddings4q[11]+pre_embeddings4q[0])/2
-	embedding4q = 5 * F.normalize(embedding4q)
 	embeddings4q.append(embedding4q)
 
 	for i in range(task_num):

@@ -44,6 +44,7 @@ def experiment(args):
     task_num = len(task_list)
     representation_shape = params['representation_shape']
     embedding_shape = params['embedding_shape']
+    embedding4q_shape = params['embedding4q_shape']
 
 
 
@@ -77,11 +78,10 @@ def experiment(args):
         **params['p_state_net']
     )
 
-    pf_task=networks.NormNet(
+    pf_task=networks.Net(
         input_shape=task_num, 
         output_shape=embedding_shape,
-        **params['task_net'],
-        norm = 5
+        **params['task_net']
     )
 
     pf_action=policies.ActionRepresentationGuassianContPolicy(
@@ -90,21 +90,20 @@ def experiment(args):
         **params['p_action_net'] 
     )
     
-    qf_task=networks.NormNet(
+    qf_task=networks.Net(
         input_shape=task_num, 
-        output_shape=embedding_shape,
-        **params['task_net'],
-        norm = 5
+        output_shape=embedding4q_shape,
+        **params['task_net']
     )
 
     
     qf1 = networks.FlattenNet( 
-        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding_shape,
+        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding4q_shape,
         output_shape = 1,
         **params['q_net'] 
     )
     qf2 = networks.FlattenNet( 
-        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding_shape,
+        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding4q_shape,
         output_shape = 1,
         **params['q_net'] 
     )

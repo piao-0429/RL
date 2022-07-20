@@ -13,6 +13,9 @@ python starter/train/ar_train_v2.py --config meta_config/mujoco/train/arsac_trai
 python starter/train/ar_train_v3.py --config meta_config/mujoco/train/arsac_train.json --id MUJOCO_ARMT_ANT_DIR_12_v3 --seed 1 --worker_nums 12 --eval_worker_nums 12
 python starter/train/ar_train_v4.py --config meta_config/mujoco/train/arsac_train.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1 --worker_nums 12 --eval_worker_nums 12
 python starter/train/ar_train_embed_withnorm_v4.py --config meta_config/mujoco/train/arsac_train_embed_withnorm.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1 --worker_nums 1 --eval_worker_nums 1
+python starter/train/ar_train_v4.py --config meta_config/mujoco/train/arsac_train_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 6 --worker_nums 12 --eval_worker_nums 12
+python starter/train/ar_train_withnoise_v4.py --config meta_config/mujoco/train/arsac_train_v4.json --id MUJOCO_ANT_DIR_12_withnoise_v4 --seed 1 --worker_nums 12 --eval_worker_nums 12
+
 
 2.plot
 python torchrl/utils/plot_csv.py --id MUJOCO_ARMT_10_v2 --env_name HalfCheetah-v3 --entry "forward_5_v2_eval_rewards" --add_tag _ARMT_10_v2_seed_1 --seed 1
@@ -56,5 +59,5 @@ python starter/visual/ar_visual.py --config meta_config/mujoco/visual/arsac_visu
 python starter/visual/ar_visual_mixed.py --config meta_config/mujoco/visual/arsac_visual_mixed.json --id MUJOCO_ARMT_ANT_DIR_12_v3 --seed 1
 python starter/visual/ar_visual.py --config meta_config/mujoco/visual/arsac_visual.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
 python starter/visual/ar_visual_mixed.py --config meta_config/mujoco/visual/arsac_visual_mixed.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
-python starter/visual/ar_visual_mixed_v4.py --config meta_config/mujoco/visual/arsac_visual_mixed.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
-python starter/visual/ar_visual_v4.py --config meta_config/mujoco/visual/arsac_visual.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
+python starter/visual/ar_visual_mixed_v4.py --config meta_config/mujoco/visual/arsac_visual_mixed_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 5
+python starter/visual/ar_visual_v4.py --config meta_config/mujoco/visual/arsac_visual_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 5

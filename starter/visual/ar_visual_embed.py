@@ -215,9 +215,9 @@ def save_gif(env_name):
 	experiment_id=str(args.id)
 
 	# adjust following parameters to get desired duration, size (bytes) and smoothness of gif
-	total_timesteps = 30000
-	step = 3
-	frame_duration = 200
+	total_timesteps = 250
+	step = 1
+	frame_duration = 60
 
 	# input images
 	gif_images_dir = "gif_images/" + experiment_id_v2 + '/' + env_name +"/"
@@ -252,7 +252,7 @@ def save_gif(env_name):
 
 if __name__ == '__main__':
 	env_name = params["env_name"]
-	max_ep_len = 20000           
+	max_ep_len = 1000           
 	save_gif_images(env_name,  max_ep_len)
 	# save_gif(env_name)
 
