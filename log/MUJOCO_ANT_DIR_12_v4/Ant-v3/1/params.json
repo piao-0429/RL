@@ -5,6 +5,7 @@
   },
   "representation_shape": 16,
   "embedding_shape": 3,
+  "embedding4q_shape":3,
   "cat_state_task": false,
   "p_state_net": {
     "hidden_shapes": [

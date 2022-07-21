@@ -39,6 +39,19 @@ python torchrl/utils/plot_csv.py --id MUJOCO_ARST_ANT --env_name Ant-v3 --entry 
 python torchrl/utils/plot_csv.py --id MUJOCO_ARMT_ANT_VEL_10 --env_name Ant-v3 --entry "backward_1_eval_rewards" --add_tag _MUJOCO_ARMT_ANT_VEL_10_seed_1 --seed 1
 python torchrl/utils/plot_csv.py --id MUJOCO_ARMT_ANT_DIR_12_v4_embed_withnorm_v4 --env_name Ant-v3 --entry "dir_330_embed_withnorm_v4_eval_rewards" --add_tag _MUJOCO_ARMT_ANT_DIR_12_v4_embed_withnorm_v4_seed_1 --seed 1
 
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_0_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_30_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_60_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_90_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_120_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_150_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_180_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_210_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_240_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_270_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_300_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "direction_330_eval_rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
+python torchrl/utils/plot_csv.py --id MUJOCO_ANT_DIR_12_withnoise_v4 --env_name Ant-v3 --entry "Running_Average_Rewards" --add_tag _MUJOCO_ANT_DIR_12_withnoise_v4_seed_1 --seed 1
 
 
 3.evaluate
@@ -60,4 +73,5 @@ python starter/visual/ar_visual_mixed.py --config meta_config/mujoco/visual/arsa
 python starter/visual/ar_visual.py --config meta_config/mujoco/visual/arsac_visual.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
 python starter/visual/ar_visual_mixed.py --config meta_config/mujoco/visual/arsac_visual_mixed.json --id MUJOCO_ARMT_ANT_DIR_12_v4 --seed 1
 python starter/visual/ar_visual_mixed_v4.py --config meta_config/mujoco/visual/arsac_visual_mixed_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 5
-python starter/visual/ar_visual_v4.py --config meta_config/mujoco/visual/arsac_visual_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 5
+python starter/visual/ar_visual_v4.py --config meta_config/mujoco/visual/arsac_visual_v4.json --id MUJOCO_ANT_DIR_12_v4 --seed 3
+python starter/visual/ar_visual_v4.py --config meta_config/mujoco/visual/arsac_visual_v4.json --id MUJOCO_ANT_DIR_12_withnoise_v4 --seed 1

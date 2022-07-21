@@ -191,10 +191,10 @@ def save_gif_images(env_name, max_ep_len):
 			embed4q_csv_path = embed4q_dir + '/' + task_list[i] + ".csv"
 			embed4q_file = open(embed4q_csv_path, "w")
 			embed4q_writer = csv.writer(embed4q_file)
-		# if params["save_velocity"]:
-		# 	velocity_csv_path = velocity_dir+ '/' + task_list[i] + ".csv"
-		# 	velocity_file = open(velocity_csv_path,'w')
-		# 	velocity_writer = csv.writer(velocity_file)
+		if params["save_velocity"]:
+			velocity_csv_path = velocity_dir+ '/' + task_list[i] + ".csv"
+			velocity_file = open(velocity_csv_path,'w')
+			velocity_writer = csv.writer(velocity_file)
 
 		ob=env.reset()
 		task_input = torch.zeros(len(task_list))
@@ -209,9 +209,9 @@ def save_gif_images(env_name, max_ep_len):
 				act=out["action"]
 				act = act.detach().cpu().numpy()
 				next_ob, _, done, info = env.step(act)
-				# if params["save_velocity"]:
-				# 	x_velocity = info['x_velocity']
-				# 	velocity_writer.writerow([x_velocity])
+				if params["save_velocity"]:
+					x_velocity = info['x_velocity']
+					velocity_writer.writerow([x_velocity])
 				# img = env.render(mode = 'rgb_array')
 				# img = Image.fromarray(img)
 				# img.save(gif_images_dir_list[i] + '/' + experiment_id + '_' + task_list[i] + str(t).zfill(6) + '.jpg')
@@ -228,7 +228,7 @@ def save_gif_images(env_name, max_ep_len):
 			elif x>0 and y<0:
 				dir+=360
 			
-			print("task", i, "direction:", dir)
+			print(task_list[i], ":", dir)
 
 		if params["save_embedding"]:
 			embedding = embedding.squeeze(0)
@@ -243,12 +243,12 @@ def save_gif_images(env_name, max_ep_len):
    
    
    
-		# if params["save_velocity"]:
-		# 	velocity_file.close()
-		# 	velocity_file = open(velocity_csv_path,'r')
-		# 	velocity_list = np.loadtxt(velocity_file)
-		# 	velocity_list = velocity_list[100:]
-		# 	average_v_writer.writerow([task_list[i], np.mean(velocity_list), np.std(velocity_list)])
+		if params["save_velocity"]:
+			velocity_file.close()
+			velocity_file = open(velocity_csv_path,'r')
+			velocity_list = np.loadtxt(velocity_file)
+			velocity_list = velocity_list[100:]
+			average_v_writer.writerow([task_list[i], np.mean(velocity_list), np.std(velocity_list)])
 
 
 	env.close()
