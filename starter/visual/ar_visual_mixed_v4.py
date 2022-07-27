@@ -169,29 +169,29 @@ def save_gif_images(env_name, max_ep_len):
 		average_v_writer.writerow(["task","v_mean","v_std"])
 
 	pre_embeddings=[]
-	pre_embedding=torch.Tensor([-1.6606739,1.7947379,-2.1531084]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.91391444,-1.0774294,0.29897562]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-1.3860723,3.432964,-2.511398]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.82457685,-0.4906419,0.5033239]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([0.9584774,3.3695683,-8.59104]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.6671668,-1.9543726,0.09565737]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([0.13486814,1.0251635,-7.7520156]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.9076895,0.55813557,-0.26508763]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-0.20245384,-0.7164493,-6.3597846]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-1.0795037,-1.242666,1.1746824]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([0.89929026,-0.8733811,-5.003262]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.37897086,-1.7998953,-0.5839664]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([3.470018,1.556553,-4.468398]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.36660576,-1.1392477,-0.75051]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([3.0787737,0.5640125,-4.1925883]).unsqueeze(0)
+	pre_embedding=torch.Tensor([0.06714192,-0.8505497,-0.8916967]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-1.0032064,-2.3969576,-5.4104686]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.25607798,-0.48358324,-1.0271046]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-0.31234053,-0.18327236,0.16193914]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.9829124,-0.4305004,-1.0443646]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-1.2142231,-0.1216026,-1.095226]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.26289868,0.32641464,1.1901977]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
-	pre_embedding=torch.Tensor([-1.7513522,0.4915735,-1.8542793]).unsqueeze(0)
+	pre_embedding=torch.Tensor([-0.9261849,0.006673306,1.2089044]).unsqueeze(0)
 	pre_embeddings.append(pre_embedding)
 	embeddings=[]
 	for i in range(11):
@@ -273,7 +273,7 @@ def save_gif_images(env_name, max_ep_len):
 			elif x>0 and y<0:
 				dir+=360
 			
-			print("task", i, "direction:", dir)
+			print(task_list[i], ":", dir)
 
 		if params["save_embedding"]:
 			embedding = embedding.squeeze(0)

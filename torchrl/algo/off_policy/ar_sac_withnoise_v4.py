@@ -5,6 +5,7 @@ import copy
 import torch
 import torch.optim as optim
 from torch import nn as nn
+import torch.nn.functional as F
 
 from .off_rl_algo import OffRLAlgo
 
@@ -118,9 +119,13 @@ class ARSAC_withNoise_v4(OffRLAlgo):
             representations = self.pf_state.forward(obs)
             embeddings = self.pf_task.forward(task_inputs)
             mean4n=torch.zeros_like(embeddings)
-            std4n=torch.full_like(embeddings, 0.1)
+            std4n=torch.full_like(embeddings, 0.02)
             noise=torch.normal(mean4n,std4n)
             embeddings_withnoise=embeddings+noise
+           
+            embeddings_withnoise=F.normalize(embeddings_withnoise)
+           
+        
             sample_info = self.pf_action.explore(representations, embeddings_withnoise, return_log_probs=True )
 
             mean        = sample_info["mean"]
@@ -133,6 +138,7 @@ class ARSAC_withNoise_v4(OffRLAlgo):
             std4n=torch.full_like(embeddings4q, 0.01)
             noise=torch.normal(mean4n,std4n)
             embeddings4q_withnoise=embeddings4q+noise
+            embeddings4q_withnoise=F.normalize(embeddings4q_withnoise)
 
             # print("obs:", obs)
             # print("embeddings4q1:", embeddings4q1)

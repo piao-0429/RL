@@ -35,12 +35,13 @@ task_list = ["dir_0", "dir_30", "dir_60", "dir_90", "dir_120", "dir_150", "dir_1
 task_num=len(task_list)
 representation_shape= params['representation_shape']
 embedding_shape=params['embedding_shape']
+embedding4q_shape=params['embedding4q_shape']
 params['p_state_net']['base_type']=networks.MLPBase
 params['task_net']['base_type']=networks.MLPBase
 params['p_action_net']['base_type']=networks.MLPBase
 import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
-pf_state = networks.Net(
+pf_state = networks.NormNet(
 	input_shape=env.observation_space.shape[0], 
 	output_shape=representation_shape,
 	**params['p_state_net']
@@ -50,14 +51,12 @@ pf_task=networks.NormNet(
 	input_shape=task_num, 
 	output_shape=embedding_shape,
 	**params['task_net'],
-	norm = 5
 )
 
 qf_task=networks.NormNet(
 	input_shape=task_num, 
-	output_shape=embedding_shape,
+	output_shape=embedding4q_shape,
 	**params['task_net'],
-	norm = 5
 )
 
 pf_action=policies.ActionRepresentationGuassianContPolicy(
@@ -72,15 +71,15 @@ model_dir="log/"+experiment_id+"/"+params['env_name']+"/"+str(args.seed)+"/model
 # pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_finish.pth", map_location='cpu'))
 # pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_finish.pth", map_location='cpu'))
 
-pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_8060.pth", map_location='cpu'))
-pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_8060.pth", map_location='cpu'))
-pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_8060.pth", map_location='cpu'))
-qf_task.load_state_dict(torch.load(model_dir + "model_qf_task_8060.pth", map_location='cpu'))
+# pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_8060.pth", map_location='cpu'))
+# pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_8060.pth", map_location='cpu'))
+# pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_8060.pth", map_location='cpu'))
+# qf_task.load_state_dict(torch.load(model_dir + "model_qf_task_8060.pth", map_location='cpu'))
 
-# pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best.pth", map_location='cpu'))
-# pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_best.pth", map_location='cpu'))
-# pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best.pth", map_location='cpu'))
-# qf_task.load_state_dict(torch.load(model_dir + "model_qf_task_best.pth", map_location='cpu'))
+pf_state.load_state_dict(torch.load(model_dir + "model_pf_state_best.pth", map_location='cpu'))
+pf_task.load_state_dict(torch.load(model_dir + "model_pf_task_best.pth", map_location='cpu'))
+pf_action.load_state_dict(torch.load(model_dir + "model_pf_action_best.pth", map_location='cpu'))
+qf_task.load_state_dict(torch.load(model_dir + "model_qf_task_best.pth", map_location='cpu'))
 
 ############################# save images for gif ##############################
 

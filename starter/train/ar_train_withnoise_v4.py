@@ -72,13 +72,13 @@ def experiment(args):
     import torch.multiprocessing as mp
     mp.set_start_method('spawn', force=True)
 
-    pf_state = networks.Net(
+    pf_state = networks.NormNet(
         input_shape=env.observation_space.shape[0], 
         output_shape=representation_shape,
         **params['p_state_net']
     )
 
-    pf_task=networks.Net(
+    pf_task=networks.NormNet(
         input_shape=task_num, 
         output_shape=embedding_shape,
         **params['task_net']
@@ -90,7 +90,7 @@ def experiment(args):
         **params['p_action_net'] 
     )
     
-    qf_task=networks.Net(
+    qf_task=networks.NormNet(
         input_shape=task_num, 
         output_shape=embedding4q_shape,
         **params['task_net']

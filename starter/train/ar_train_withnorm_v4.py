@@ -44,6 +44,7 @@ def experiment(args):
     task_num = len(task_list)
     representation_shape = params['representation_shape']
     embedding_shape = params['embedding_shape']
+    embedding4q_shape = params['embedding4q_shape']
 
 
 
@@ -71,7 +72,7 @@ def experiment(args):
     import torch.multiprocessing as mp
     mp.set_start_method('spawn', force=True)
 
-    pf_state = networks.Net(
+    pf_state = networks.NormNet(
         input_shape=env.observation_space.shape[0], 
         output_shape=representation_shape,
         **params['p_state_net']
@@ -80,8 +81,7 @@ def experiment(args):
     pf_task=networks.NormNet(
         input_shape=task_num, 
         output_shape=embedding_shape,
-        **params['task_net'],
-        norm = 5
+        **params['task_net']
     )
 
     pf_action=policies.ActionRepresentationGuassianContPolicy(
@@ -92,19 +92,18 @@ def experiment(args):
     
     qf_task=networks.NormNet(
         input_shape=task_num, 
-        output_shape=embedding_shape,
+        output_shape=embedding4q_shape,
         **params['task_net'],
-        norm = 5
     )
 
     
     qf1 = networks.FlattenNet( 
-        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding_shape,
+        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding4q_shape,
         output_shape = 1,
         **params['q_net'] 
     )
     qf2 = networks.FlattenNet( 
-        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding_shape,
+        input_shape = env.observation_space.shape[0] + env.action_space.shape[0] + embedding4q_shape,
         output_shape = 1,
         **params['q_net'] 
     )
